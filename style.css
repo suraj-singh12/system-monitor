@@ -1,5 +1,6 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Belleza&family=Playfair+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=EB+Garamond&family=Playfair+Display&family=Space+Mono&family=Young+Serif&display=swap');
 * {
     text-align: center;
 }
@@ -9,6 +10,9 @@
     display: inline-block;
     font-family: 'Belleza', sans-serif;
     font-family: 'Playfair Display', serif;
+
+    font-family: 'DM Serif Display', serif;
+    /* font-family: 'EB Garamond', serif; */
 }
 
 .sidebar {
