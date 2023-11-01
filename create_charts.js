@@ -1,20 +1,44 @@
 
 
-function createChart(ctx, data, labels, color, type = "line") {
-  const chart = new Chart(ctx, {
-    type: type,
-    data: {
-      labels: labels,
-      datasets: [
-        {
-          label: "CPU Usage",
-          borderColor: color, 
-          fill: false,
-          data: data,
+function createChart(ctx, data, labels, color, type = "side") {
+  let additionalDatasetOptions = {};
+  let additionalChartOptions = {};
+  if(type === "main") {
+    additionalDatasetOptions = {
+      cubicInterpolationMode: "monotone",
+      tension: 0.4,
+    }
+    additionalChartOptions = {
+      responsive: "true",
+      plugins: {
+        title: {
+          display: true,
+          text: "CPU Usage Chart",
         },
-      ],
-    },
-    options: {
+      },
+      interaction: {
+        intersect: false,
+      },
+      scales: {
+        x: {
+          display: true,
+          title: {
+            display: true,
+          },
+        },
+        y: {
+          display: true,
+          title: {
+            display: true,
+            text: "Load",
+          },
+          suggestedMin: -1,
+          suggestedMax: 1,
+        },
+      },
+    }
+  } else {
+    additionalChartOptions = {
       scales: {
         x: {
           type: "linear", 
@@ -25,11 +49,31 @@ function createChart(ctx, data, labels, color, type = "line") {
           suggestedMax: 1,
         },
       },
+    }
+  }
+
+  
+  const chart = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: "CPU Usage",
+          borderColor: color, 
+          fill: false,
+          data: data,
+          ...additionalDatasetOptions
+        },
+      ],
+    },
+    options: {
+      ...additionalChartOptions
     },
   });
   return chart;
 }
-function createCpuChart(element, color) {
+function createCpuChart(element, color, type="side") {
   const data = [];
   const labels = [];
   function getCPUFrequency() {
@@ -52,7 +96,7 @@ function createCpuChart(element, color) {
   // const ctx3 = document.getElementById("cpuUsageChart3").getContext("2d");
   // const ctx4 = document.getElementById("cpuUsageChart4").getContext("2d");
   // const chart = [createChart(ctx, data, labels, color), createChart(ctx1, data, labels, color), createChart(ctx2, data, labels, color), createChart(ctx3, data, labels, color), createChart(ctx4, data, labels, color)];
-  const chart = createChart(ctx, data, labels, color);
+  const chart = createChart(ctx, data, labels, color, type);
   function updateChart() {
     // chart.forEach((chart) => chart.update());
       chart.update();
