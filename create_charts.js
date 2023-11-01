@@ -124,3 +124,7 @@ function createMemoryChart(element, color, type="side", totalMemory=16) {
     chart.update();
   }, 1000);
 }
+
+function createHddMemoryChart(element, color, type="side") {
+  
+}

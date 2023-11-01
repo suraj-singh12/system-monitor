@@ -1,15 +1,15 @@
 <?php
 // Function to execute a shell command and return the output
-function executeCommand($command) {
-    $output = shell_exec($command);
-    return $output;
-}
+// function executeCommand($command) {
+//     $output = shell_exec($command);
+//     return $output;
+// }
 
 // Function to create a bar chart
 function createBarChart($chartData, $chartTitle, $chartCanvasId, $chartLabel) {
     echo "<div class='info-box'>";
-    echo "<h2>$chartTitle</h2>";
-    echo "<canvas id='$chartCanvasId' width='400' height='200'></canvas>";
+    // echo "<h2>$chartTitle</h2>";
+    echo "<canvas id='$chartCanvasId'></canvas>";
     echo "</div>";
 
     // Create a JavaScript array from PHP data
@@ -59,27 +59,26 @@ function displayCPUFrequency() {
 }
 
 // Function to display real-time current disk usage
-function displayDiskUsage() {
-    $diskInfo = executeCommand('wmic logicaldisk get size,freespace');
+function displayDiskUsage($canvasId = "disk-usage-chart", $title = "Disk Usage (GB)") {
+    $diskInfo = executeCommand('wmic logicaldisk get caption');
+    $diskSpaceInfo = executeCommand('wmic logicaldisk get size,freespace');
     $diskInfoArray = explode("\n", trim($diskInfo));
+    $diskSpaceInfoArray = explode("\n", trim($diskSpaceInfo));
     $diskUsageData = [];
 
     for ($i = 1; $i < count($diskInfoArray); $i++) {
         $diskData = explode("  ", trim($diskInfoArray[$i]));
-        $freeSpace = (float)($diskData[0]); // now in KB
-        $totalSpace = 0; // now in KB
-        if($diskData[1] != "") {
-            $totalSpace = (float)($diskData[1]); // now in KB
-        } else {
-            $totalSpace = (float)($diskData[2]); // now in KB
+        $diskSpaceData = explode("  ", trim($diskSpaceInfoArray[$i]));
+        if ($diskSpaceData[1] == "") {
+            $diskSpaceData[1] = $diskSpaceData[2];
         }
-        $usedSpace = $totalSpace - $freeSpace;
-        $usedSpaceGB = round($usedSpace / (1024 * 1024 * 1024));
-        $diskUsageData[] = $usedSpaceGB;
+        $totalSpaceGB = round((float) $diskSpaceData[1] / (1024 * 1024 * 1024), 2);
+        $freeSpaceGB = round((float) $diskSpaceData[0] / (1024 * 1024 * 1024), 2);
+        array_push($diskUsageData, $totalSpaceGB - $freeSpaceGB);
     }
-
-    $chartTitle = "Disk Usage (GB)";
-    $chartCanvasId = "disk-usage-chart";
+    
+    $chartTitle = $title;
+    $chartCanvasId = $canvasId;
     $chartLabel = range(1, count($diskUsageData));
 
     createBarChart($diskUsageData, $chartTitle, $chartCanvasId, $chartLabel);
@@ -111,68 +110,3 @@ function displayRAMUsage() {
 
 
 ?>
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>System Info</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-
-        .info-container {
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
-        }
-
-        .info-box {
-            background-color: #f0f0f0;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-        }
-
-        h1 {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-
-        h2 {
-            font-size: 18px;
-            margin: 0;
-        }
-
-        p {
-            font-size: 16px;
-            margin: 0;
-        }
-
-        canvas {
-            display: block;
-        }
-    </style>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body>
-    <div class="info-container">
-        <h1>System Information</h1>
-
-        <!-- CPU Frequency Chart -->
-        <?php displayCPUFrequency(); ?>
-
-        <!-- Disk Usage Chart -->
-        <?php displayDiskUsage(); ?>
-
-        <!-- RAM Usage Chart -->
-        <?php displayRAMUsage(); ?>
-    </div>
-</body>
-</html>

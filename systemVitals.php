@@ -1,9 +1,9 @@
 <?php
 // Function to execute a shell command and return the output
-function executeCommand($command) {
-    $output = shell_exec($command);
-    return $output;
-}
+// function executeCommand($command) {
+//     $output = shell_exec($command);
+//     return $output;
+// }
 
 // Function to display system information
 function displaySystemInfo() {

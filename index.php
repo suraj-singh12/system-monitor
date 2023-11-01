@@ -28,6 +28,13 @@
       prevType = ofType;
     }
   </script>
+  <?php
+    function executeCommand($command) {
+      $output = shell_exec($command);
+      return $output;
+    }
+    include('./php_charts.php');
+  ?>
 </head>
 
 <body>
@@ -36,6 +43,7 @@
   </div>
 
   <div class="container">
+
     <div class="sidebar">
       <div class="cpu" onclick="loadInfo('cpu')">
         <canvas id="cpuUsageChart"></canvas>
@@ -43,32 +51,36 @@
           createCpuChart("cpuUsageChart", "orange");
         </script>
       </div>
+      
       <div class="memory" onclick="loadInfo('ramMemory')">
         <canvas id="primaryMemoryChart"></canvas>
         <script>
-          // let totalMemory = document.getElementById('ram').textContent;
-          // console.log(totalMemory);
           createMemoryChart("primaryMemoryChart", "lightgreen");
         </script>
       </div>
-      <div class="hdd">
-        <canvas id="cpuUsageChart2"></canvas>
+      
+      <div class="hdd" onclick="loadInfo('hddMemory')">
+        <!-- <canvas id="hddUsageChart"></canvas>
         <script>
-          createCpuChart("cpuUsageChart2", "pink");
-        </script>
+          createHddMemoryChart("hddUsageChart", "pink");
+        </script> -->
+        <?php displayDiskUsage("disk-usage-chart");   ?>
       </div>
+      
       <div class="wifi">
         <canvas id="cpuUsageChart3"></canvas>
         <script>
           createCpuChart("cpuUsageChart3", "grey ");
         </script>
       </div>
+      
       <div class="gpu">
         <canvas id="cpuUsageChart4"></canvas>
         <script>
           createCpuChart("cpuUsageChart4", "cyan");
         </script>
       </div>
+      
       <div class="combine">
         <button onclick="loadInfo('all')" id="combineButton">
           Display All Info
@@ -77,12 +89,15 @@
     </div>
 
     <div class="main">
+      
       <div id="all">
         <?php include('./systemVitals.php'); ?>
       </div>
+      
       <div id="simple" style="width: 100%">
         <?php include('./basicInfo.php'); ?>
       </div>
+      
       <div id="cpu">
         <canvas id="createCpuMainChart"></canvas>
         <script>
@@ -98,6 +113,19 @@
         </script>
         <?php include('./memoryInfo.php'); ?>
       </div>
+
+      <div id="hddMemory" style="width: 100%">
+        <!-- <canvas id="createhddMemoryChart"></canvas>
+        <script>
+          createHddMemoryChart("createhddMemoryChart", "pink", "main");
+        </script> -->
+        <?php 
+          displayDiskUsage("disk-usage-chart2");   
+          include('./diskInfo.php');
+        ?>
+
+      </div>
+
     </div>
   </div>
 </body>

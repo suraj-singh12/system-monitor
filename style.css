@@ -42,7 +42,7 @@
 }
 
 #cpu,
-#all, #ramMemory {
+#all, #ramMemory, #hddMemory {
     display: none;
 }
 
