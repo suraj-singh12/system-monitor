@@ -42,10 +42,12 @@
 }
 
 #cpu,
-#all, #ramMemory, #hddMemory {
+#all, #ramMemory, #hddMemory, #gpu, #wireless {
     display: none;
 }
-
+.wifi, .combine {
+    font-size: 3rem;
+}
 button {
     border: 0;
     background-color: transparent;

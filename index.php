@@ -11,6 +11,8 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
     crossorigin="anonymous"></script>
+  <!-- bootstrap icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
   <!-- for charts -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="./create_charts.js"></script>
@@ -66,25 +68,21 @@
         </script> -->
         <?php displayDiskUsage("disk-usage-chart");   ?>
       </div>
-      
-      <div class="wifi">
-        <canvas id="cpuUsageChart3"></canvas>
+
+      <div class="gpu" onclick="loadInfo('gpu')">
+        <canvas id="gpuUsageChart"></canvas>
         <script>
-          createCpuChart("cpuUsageChart3", "grey ");
+          createGpuChart("gpuUsageChart", "cyan");
         </script>
       </div>
       
-      <div class="gpu">
-        <canvas id="cpuUsageChart4"></canvas>
-        <script>
-          createCpuChart("cpuUsageChart4", "cyan");
-        </script>
+      <div class="wifi" onclick="loadInfo('wireless')">
+          <i class="bi bi-wifi"></i>
       </div>
       
-      <div class="combine">
-        <button onclick="loadInfo('all')" id="combineButton">
-          Display All Info
-        </button>
+      
+      <div class="combine" onclick="loadInfo('all')">
+          <i class="bi bi-info-square"></i>
       </div>
     </div>
 
@@ -123,7 +121,18 @@
           displayDiskUsage("disk-usage-chart2");   
           include('./diskInfo.php');
         ?>
+      </div>
 
+      <div id="gpu">
+        <canvas id="createGpuMainChart"></canvas>
+        <script>
+          createGpuChart("createGpuMainChart", "cyan", "main");
+        </script>
+        <?php include("./gpuInfo.php"); ?>
+      </div>
+
+      <div id="wireless" style="text-align: center; width: 90%">
+        <?php include('./wirelessInfo.php'); ?>
       </div>
 
     </div>

@@ -125,6 +125,24 @@ function createMemoryChart(element, color, type="side", totalMemory=16) {
   }, 1000);
 }
 
-function createHddMemoryChart(element, color, type="side") {
+// function createHddMemoryChart(element, color, type="side") {
+
+// }
+
+function createGpuChart(element, color, type="side") {
+  const data = [];
+  const labels = [];
+  function getGpuUsage() {
+    setTimeout(() => {
+      data.push(Math.random());
+      labels.push(labels.length + 1); 
+    }, 1000);
+  }
   
+  const ctx = document.getElementById(element).getContext("2d");
+  const chart = createChart(ctx, data, labels, color, type, 'GPU Usage');
+  setInterval(() => {
+    getGpuUsage();
+    chart.update();
+  }, 1000);
 }

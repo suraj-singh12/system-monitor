@@ -24,7 +24,6 @@ function displaySystemInfo() {
     $diskInfo = executeCommand('wmic logicaldisk get caption');
     $diskSpaceInfo = executeCommand('wmic logicaldisk get size,freespace');
     $gpuInfo = executeCommand('wmic path win32_videocontroller get caption,AdapterRAM,AdapterDACType,VideoProcessor');
-    $batteryInfo = executeCommand('wmic path Win32_Battery get EstimatedChargeRemaining,Caption');
     $wifiInfo = executeCommand('netsh wlan show interfaces');
 
     $diskInfoArray = explode("\n", trim($diskInfo));
@@ -111,12 +110,22 @@ function displaySystemInfo() {
 
     echo "<div class='info-box'>";
     echo "<h2>WiFi</h2>";
-    echo "<pre>" . $wifiInfo . "</pre>";
-    echo "</div>";
+    
+    $lines = explode("\n", $wifiInfo);
+    echo '<table>';
+    foreach ($lines as $line) {
+        $parts = explode(':', $line, 2);
+        $key = trim($parts[0]);
+        $value = trim(isset($parts[1]) ? $parts[1] : '');
 
-    echo "<div class='info-box'>";
-    echo "<h2>Battery</h2>";
-    echo "<p>" . $batteryInfo . "</p>";
+        if ($key !== '') {
+            echo '<tr>';
+            echo '<td>' . $key . '</td>';
+            echo '<td>' . $value . '</td>';
+            echo '</tr>';
+        }
+    }
+    echo '</table>';
     echo "</div>";
 
     echo "</div>";
@@ -127,88 +136,10 @@ function displaySystemInfo() {
 <html>
 <head>
     <title>System Info</title>
-    <!-- <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-
-        .info-container {
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
-        }
-
-        .info-box {
-            background-color: #f0f0f0;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-        }
-
-        h1 {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-
-        h2 {
-            font-size: 18px;
-            margin: 0;
-        }
-
-        p {
-            font-size: 16px;
-            margin: 0;
-        }
-
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            text-align: left;
-            padding: 8px;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        pre {
-            white-space: pre-wrap;
-        }
-        .plot {
-            background-color: #f0f0f0;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid black;
-            text-align: center;
-            text-decoration: none;
-            color: black;
-        }
-        header {
-            display: flex;
-            flex-direction: column;
-            flex-wrap: wrap;
-        } -->
-    <!-- </style> -->
     <link rel="stylesheet" href="./common.css">
 </head>
 <body>
-    <div class="info-container">
-        <header>
-            <h1 class="heading">System Information</h1>
-            <a href="./graph.php" class="plot">Plot Now</a>
-        </header>
-        <?php displaySystemInfo(); ?>
-    </div>
+    <?php displaySystemInfo(); ?>   
 </body>
 </html>
 
