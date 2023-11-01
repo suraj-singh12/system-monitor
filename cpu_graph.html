@@ -1,0 +1,62 @@
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <div style="width: 80%">
+        <canvas id="cpuUsageChart"></canvas>
+    </div>
+
+    <script>
+        const data = [];
+        const labels = [];
+
+        function getCPUFrequency() {
+            if ("performance" in window && "now" in performance) {
+                const startTime = performance.now();
+
+                setTimeout(() => {
+                    const endTime = performance.now();
+                    const cpuFrequency = 1000 / (endTime - startTime);
+                    data.push(cpuFrequency);
+                    labels.push(labels.length + 1); // Numerical label
+                    // console.log(`CPU Frequency: ${cpuFrequency} Hz`);
+                }, 1000);
+            } else {
+                console.log("Performance API not available.");
+            }
+        }
+
+        setInterval(() => {
+            getCPUFrequency();
+            updateChart();
+        }, 1000);
+
+        const ctx = document.getElementById("cpuUsageChart").getContext("2d");
+        const chart = new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: "CPU Usage",
+                        borderColor: "rgba(75, 192, 192, 1)",
+                        fill: false,
+                        data: data,
+                    },
+                ],
+            },
+            options: {
+                scales: {
+                    x: {
+                        type: "linear",
+                        position: "bottom",
+                    },
+                    y: {
+                        beginAtZero: true,
+                    },
+                },
+            },
+        });
+
+        function updateChart() {
+            chart.update();
+        }
+    </script>
