@@ -29,6 +29,7 @@ function getCpuInfo() {
             }
         }
         echo "<tr><td>" . $cpu . "</td><td>" . $maxSpeed . "</td><td>" . $numberOfCores . "</td><td>" . $numberOfLogicalProcessors . "</td></tr>";
+        echo "</table></div>";
     }
 }
 
@@ -40,7 +41,7 @@ function getCpuInfo() {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
+    <!-- <style>
         .info-box {
             background-color: #f0f0f0;
             padding: 10px;
@@ -66,7 +67,7 @@ function getCpuInfo() {
             background-color: #f2f2f2;
         }
 
-    </style>
+    </style> -->
 </head>
 <body>
     <?php getCpuInfo(); ?>

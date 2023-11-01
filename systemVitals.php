@@ -127,7 +127,7 @@ function displaySystemInfo() {
 <html>
 <head>
     <title>System Info</title>
-    <style>
+    <!-- <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
@@ -197,8 +197,9 @@ function displaySystemInfo() {
             display: flex;
             flex-direction: column;
             flex-wrap: wrap;
-        }
-    </style>
+        } -->
+    <!-- </style> -->
+    <link rel="stylesheet" href="./common.css">
 </head>
 <body>
     <div class="info-container">
