@@ -34,7 +34,7 @@
           options: {
             scales: {
               x: {
-                type: "linear",
+                type: "linear", 
                 position: "bottom",
               },
               y: {
@@ -67,16 +67,10 @@
         const ctx2 = document.getElementById("cpuUsageChart2").getContext("2d");
         const ctx3 = document.getElementById("cpuUsageChart3").getContext("2d");
         const ctx4 = document.getElementById("cpuUsageChart4").getContext("2d");
-        const chart = [
-          createChart(ctx, data, labels),
-          createChart(ctx1, data, labels),
-          createChart(ctx2, data, labels),
-          createChart(ctx3, data, labels),
-          createChart(ctx4, data, labels),
-        ];
+        const chart = [createChart(ctx, data, labels), createChart(ctx1, data, labels), createChart(ctx2, data, labels), createChart(ctx3, data, labels), createChart(ctx4, data, labels)];
         function updateChart() {
           chart.forEach((chart) => chart.update());
-          // chart.update();
+            // chart.update();
         }
         setInterval(() => {
           getCPUFrequency();
@@ -114,25 +108,25 @@
           </script>
         </div>
         <div class="memory">
-          <canvas id="cpuUsageChart1"></canvas>
+            <canvas id="cpuUsageChart1"></canvas>
           <script>
             createCpuChart();
           </script>
         </div>
         <div class="hdd">
-          <canvas id="cpuUsageChart2"></canvas>
+            <canvas id="cpuUsageChart2"></canvas>
           <script>
             createCpuChart();
           </script>
         </div>
         <div class="wifi">
-          <canvas id="cpuUsageChart3"></canvas>
+            <canvas id="cpuUsageChart3"></canvas>
           <script>
             createCpuChart();
           </script>
         </div>
         <div class="gpu">
-          <canvas id="cpuUsageChart4"></canvas>
+            <canvas id="cpuUsageChart4"></canvas>
           <script>
             createCpuChart();
           </script>
