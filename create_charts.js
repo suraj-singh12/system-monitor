@@ -1,6 +1,6 @@
 
 
-function createChart(ctx, data, labels, color, type = "side") {
+function createChart(ctx, data, labels, color, type = "side", chartLabel = 'CPU Usage') {
   let additionalDatasetOptions = {};
   let additionalChartOptions = {};
   if(type === "main") {
@@ -13,7 +13,7 @@ function createChart(ctx, data, labels, color, type = "side") {
       plugins: {
         title: {
           display: true,
-          text: "CPU Usage Chart",
+          text: chartLabel + " Chart",
         },
       },
       interaction: {
@@ -59,7 +59,7 @@ function createChart(ctx, data, labels, color, type = "side") {
       labels: labels,
       datasets: [
         {
-          label: "CPU Usage",
+          label: chartLabel,
           borderColor: color, 
           fill: false,
           data: data,
@@ -104,5 +104,23 @@ function createCpuChart(element, color, type="side") {
   setInterval(() => {
     getCPUFrequency();
     updateChart();
+  }, 1000);
+}
+
+function createMemoryChart(element, color, type="side", totalMemory=16) {
+  const data = [];
+  const labels = [];
+  function getMemoryUsage() {
+    setTimeout(() => {
+      data.push((totalMemory / 2) * Math.random());
+      labels.push(labels.length + 1); 
+    }, 1000);
+  }
+  
+  const ctx = document.getElementById(element).getContext("2d");
+  const chart = createChart(ctx, data, labels, color, type, 'Memory Usage');
+  setInterval(() => {
+    getMemoryUsage();
+    chart.update();
   }, 1000);
 }

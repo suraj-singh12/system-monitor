@@ -34,6 +34,7 @@
   <div class="container heading">
     <h1 onclick="loadInfo('simple')">System Monitor [OS: Win Based x64] </h1>
   </div>
+
   <div class="container">
     <div class="sidebar">
       <div class="cpu" onclick="loadInfo('cpu')">
@@ -42,10 +43,12 @@
           createCpuChart("cpuUsageChart", "orange");
         </script>
       </div>
-      <div class="memory">
-        <canvas id="cpuUsageChart1"></canvas>
+      <div class="memory" onclick="loadInfo('ramMemory')">
+        <canvas id="primaryMemoryChart"></canvas>
         <script>
-          createCpuChart("cpuUsageChart1", "lightgreen");
+          // let totalMemory = document.getElementById('ram').textContent;
+          // console.log(totalMemory);
+          createMemoryChart("primaryMemoryChart", "lightgreen");
         </script>
       </div>
       <div class="hdd">
@@ -72,6 +75,7 @@
         </button>
       </div>
     </div>
+
     <div class="main">
       <div id="all">
         <?php include('./systemVitals.php'); ?>
@@ -85,6 +89,14 @@
           createCpuChart('createCpuMainChart', 'orange');
           </script>
         <?php include('./cpuInfo.php'); ?>
+      </div>
+
+      <div id="ramMemory" style="width: 100%">
+        <canvas id="createRamMemoryChart"></canvas>
+        <script>
+          createMemoryChart("createRamMemoryChart", "lightgreen", "main");
+        </script>
+        <?php include('./memoryInfo.php'); ?>
       </div>
     </div>
   </div>
