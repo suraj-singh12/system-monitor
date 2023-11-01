@@ -10,6 +10,7 @@ function getCPUFrequency(dataPoints, labels) {
     }, 2000);
   } else return Math.random();
 }
+
 function createChart(chartOf = "CPU") {
   const DATA_COUNT = 10;
   const labels = [];

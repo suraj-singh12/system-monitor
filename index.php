@@ -14,7 +14,9 @@
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
       crossorigin="anonymous"
-    ></script>
+      ></script>
+
+      <!-- for charts -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="./create_side_charts.js"></script>
     
@@ -37,42 +39,56 @@
         border: 1px solid black;
       }
     </style>
+
+    <script>
+      function loadInfo(ofType) {
+        if(ofType === 'cpu') {
+          document.getElementById('cpu').textContent = 
+          console.log('loading php')
+        }
+        else document.getElementById('cpu').innerHTML = "";
+      }
+    </script>
   </head>
   <body>
     <div class="container">
       <div class="sidebar">
-        <div class="cpu">
+        <div class="cpu" onclick="loadInfo('cpu')">
           <canvas id="cpuUsageChart"></canvas>
           <script>
-            createCpuChart();
+            createCpuChart('cpuUsageChart','orange');
           </script>
         </div>
         <div class="memory">
             <canvas id="cpuUsageChart1"></canvas>
           <script>
-            createCpuChart();
+            createCpuChart('cpuUsageChart1','lightgreen');
           </script>
         </div>
         <div class="hdd">
             <canvas id="cpuUsageChart2"></canvas>
           <script>
-            createCpuChart();
+            createCpuChart('cpuUsageChart2','pink');
           </script>
         </div>
         <div class="wifi">
             <canvas id="cpuUsageChart3"></canvas>
           <script>
-            createCpuChart();
+            createCpuChart('cpuUsageChart3','grey ');
           </script>
         </div>
         <div class="gpu">
             <canvas id="cpuUsageChart4"></canvas>
           <script>
-            createCpuChart();
+            createCpuChart('cpuUsageChart4','cyan');
           </script>
         </div>
       </div>
-      <div class="main"></div>
+      <div class="main">
+        <div class="cpu" id="cpu">
+          <?php include('./systemVitals.php'); ?>
+        </div>
+      </div>
     </div>
   </body>
 </html>
